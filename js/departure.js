@@ -1,11 +1,16 @@
 
 
 var isNode = (typeof window === 'undefined');
+var isi2c             = 0;
 if(isNode){
   var http  = require('http');
-  var i2c = require('i2c-bus');
+  if (isi2c){
+    var i2c = require('i2c-bus');
+  }
   var os = require('os');
-  i2c1 = i2c.openSync(1);
+  if (isi2c){
+    i2c1 = i2c.openSync(1);
+  }
 }
 
 var version           = '1.2'
@@ -59,6 +64,8 @@ function onInit(){
     orig = process.argv[2];
     dest = process.argv[3];
   
+    console.log("Orig: " + orig,"Dest: " + dest);
+
     var ifaces = os.networkInterfaces();
     Object.keys(ifaces).forEach(function (ifname) {
       var alias = 0;
@@ -73,7 +80,7 @@ function onInit(){
           //console.log(ifname + ':' + alias, iface.address);
         } else {
           // this interface has only one ipv4 adress
-          console.log(ifname, iface.address);
+          console.log("Interface: " + ifname,"IP: " + iface.address);
           deviceIP = iface.address
         }
       });
@@ -486,7 +493,12 @@ function updateDMD(){
       boardCanvas.ctx[i+768+(24*30)] = 0x0;
    }
    var buf = new Buffer(boardCanvas.ctx);
-   i2c1.i2cWrite(0x40, buf.length, buf, function(){});
+   if (isi2c){
+     i2c1.i2cWrite(0x40, buf.length, buf, function(){});
+   } else {
+     console.log(buf.length, buf);
+   }
+   
    
   // IN BROWSER
   } else {
