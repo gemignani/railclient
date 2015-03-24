@@ -77,7 +77,7 @@ function onInit(){
 
         if (alias >= 1) {
           // this single interface has multiple ipv4 addresses
-          //console.log(ifname + ':' + alias, iface.address);
+          console.log(ifname + ':' + alias, iface.address);
         } else {
           // this interface has only one ipv4 adress
           console.log("Interface: " + ifname,"IP: " + iface.address);
@@ -428,7 +428,7 @@ function errorHandler(type){
 }
 
 function createService(id,obj){
-  //console.log(obj);
+  console.log(obj);
   var ctx       = createCanvas(192,9);
   var cancelled = (obj.etd=="Cancelled");
   
@@ -450,7 +450,7 @@ function createService(id,obj){
 }
 
 function createCallAtList(arr,operator){
-  //console.log(arr);
+  console.log(arr);
   clearCanvas(msgCanvas,0);
   
   var xPos = drawText("Calling at: ",msgCanvas,font1,colText,192,0,50,"left",1,0)+193;
